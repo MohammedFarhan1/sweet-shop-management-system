@@ -16,11 +16,11 @@ This project demonstrates a complete sweet shop management system with user auth
 - **bcrypt** - Password hashing
 - **Jest + Supertest** - Testing framework
 
-### Frontend (Planned)
+### Frontend
 - **React** with **Vite + TypeScript**
-- **React Router** - Navigation
 - **Axios** - HTTP client
 - **Tailwind CSS** - Styling
+- **Context API** - State management
 
 ## 🏗 Architecture
 
@@ -202,6 +202,46 @@ This project strictly follows the **Red → Green → Refactor** TDD cycle:
    npm start
    ```
 
+### Frontend Setup
+
+1. **Navigate to frontend directory**
+   ```bash
+   cd ../frontend
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Start development server**
+   ```bash
+   npm run dev
+   ```
+
+4. **Build for production**
+   ```bash
+   npm run build
+   ```
+
+### Full Application Setup
+
+1. **Start Backend** (Terminal 1)
+   ```bash
+   cd backend
+   npm run dev
+   ```
+
+2. **Start Frontend** (Terminal 2)
+   ```bash
+   cd frontend
+   npm run dev
+   ```
+
+3. **Access Application**
+   - Frontend: http://localhost:5173
+   - Backend API: http://localhost:5000
+
 ## 📝 API Usage Examples
 
 ### Register a new user
@@ -326,13 +366,29 @@ npm run test:coverage
 - **Test coverage** - Comprehensive test scenarios covering edge cases
 - **Clean commits** - Proper git history with AI co-authorship attribution
 
+## 🎨 Frontend Features
+
+### ✅ User Interface
+- **Responsive Design** - Works on desktop and mobile
+- **Authentication UI** - Login/Register forms
+- **Dashboard** - Browse and search sweets
+- **Admin Panel** - Manage sweets and inventory
+- **Real-time Updates** - Instant feedback on actions
+
+### ✅ User Experience
+- **Search & Filter** - Find sweets by name, category, price
+- **Purchase Flow** - Select quantity and buy sweets
+- **Admin Management** - CRUD operations for sweets
+- **Inventory Control** - Restock functionality
+- **Error Handling** - User-friendly error messages
+
 ## 🚀 Next Steps
 
-1. **Frontend Development** - React application with TypeScript
-2. **Deployment** - Backend to Railway/Render, Frontend to Vercel
-3. **Advanced Features** - Order history, payment integration, analytics
-4. **Performance** - Caching, pagination, optimization
-5. **Security** - Rate limiting, input sanitization, HTTPS
+1. **Deployment** - Backend to Railway/Render, Frontend to Vercel
+2. **Advanced Features** - Order history, payment integration, analytics
+3. **Performance** - Caching, pagination, optimization
+4. **Security** - Rate limiting, input sanitization, HTTPS
+5. **Testing** - Frontend unit and integration tests
 
 ## 📄 License
 
