@@ -1,8 +1,9 @@
 import mongoose, { Document, Schema } from 'mongoose';
 
-export interface ISweet extends Document {
-  name: string;
-  category: string;
+export interface ICartItem extends Document {
+  userId: string;
+  sweetId: string;
+  sweetName: string;
   price: number;
   quantity: number;
   quantityType: string;
@@ -10,16 +11,19 @@ export interface ISweet extends Document {
   updatedAt: Date;
 }
 
-const sweetSchema = new Schema<ISweet>({
-  name: {
+const cartItemSchema = new Schema<ICartItem>({
+  userId: {
     type: String,
     required: true,
-    trim: true
+    index: true
   },
-  category: {
+  sweetId: {
     type: String,
-    required: true,
-    trim: true
+    required: true
+  },
+  sweetName: {
+    type: String,
+    required: true
   },
   price: {
     type: Number,
@@ -29,12 +33,10 @@ const sweetSchema = new Schema<ISweet>({
   quantity: {
     type: Number,
     required: true,
-    min: 0
+    min: 1
   },
   quantityType: {
     type: String,
-    required: true,
-    enum: ['kg', 'nos', 'grams', 'liters', 'pieces'],
     default: 'nos'
   },
   createdAt: {
@@ -47,8 +49,4 @@ const sweetSchema = new Schema<ISweet>({
   }
 });
 
-sweetSchema.pre('save', function() {
-  this.updatedAt = new Date();
-});
-
-export const Sweet = mongoose.model<ISweet>('Sweet', sweetSchema);
+export const CartItem = mongoose.model<ICartItem>('CartItem', cartItemSchema);

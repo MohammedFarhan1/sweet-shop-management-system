@@ -22,7 +22,7 @@ export interface SearchQuery {
 }
 
 export class SweetService {
-  async createSweet(sweetData: CreateSweetData): Promise<{ sweet: Partial<ISweet>; message: string }> {
+  async createSweet(sweetData: CreateSweetData): Promise<{ sweet: any; message: string }> {
     const { name, category, price, quantity } = sweetData;
 
     // Validate input
@@ -52,27 +52,26 @@ export class SweetService {
 
     await sweet.save();
 
-    // Return sweet response
-    const sweetResponse = {
-      id: sweet._id,
-      name: sweet.name,
-      category: sweet.category,
-      price: sweet.price,
-      quantity: sweet.quantity,
-      createdAt: sweet.createdAt,
-      updatedAt: sweet.updatedAt
-    };
-
     return {
-      sweet: sweetResponse,
+      sweet: {
+        _id: sweet._id,
+        id: sweet._id,
+        name: sweet.name,
+        category: sweet.category,
+        price: sweet.price,
+        quantity: sweet.quantity,
+        createdAt: sweet.createdAt,
+        updatedAt: sweet.updatedAt
+      },
       message: 'Sweet created successfully'
     };
   }
 
-  async getAllSweets(): Promise<{ sweets: Partial<ISweet>[] }> {
+  async getAllSweets(): Promise<{ sweets: any[] }> {
     const sweets = await Sweet.find().sort({ createdAt: -1 });
 
     const sweetsResponse = sweets.map(sweet => ({
+      _id: sweet._id,
       id: sweet._id,
       name: sweet.name,
       category: sweet.category,
@@ -85,7 +84,7 @@ export class SweetService {
     return { sweets: sweetsResponse };
   }
 
-  async searchSweets(query: SearchQuery): Promise<{ sweets: Partial<ISweet>[] }> {
+  async searchSweets(query: SearchQuery): Promise<{ sweets: any[] }> {
     const filter: any = {};
 
     if (query.name) {
@@ -109,6 +108,7 @@ export class SweetService {
     const sweets = await Sweet.find(filter).sort({ createdAt: -1 });
 
     const sweetsResponse = sweets.map(sweet => ({
+      _id: sweet._id,
       id: sweet._id,
       name: sweet.name,
       category: sweet.category,
@@ -121,7 +121,7 @@ export class SweetService {
     return { sweets: sweetsResponse };
   }
 
-  async updateSweet(id: string, updateData: UpdateSweetData): Promise<{ sweet: Partial<ISweet>; message: string }> {
+  async updateSweet(id: string, updateData: UpdateSweetData): Promise<{ sweet: any; message: string }> {
     // Validate input
     if (updateData.price !== undefined && updateData.price < 0) {
       throw new Error('Price must be greater than or equal to 0');
@@ -150,19 +150,17 @@ export class SweetService {
       throw new Error('Sweet not found');
     }
 
-    // Return updated sweet
-    const sweetResponse = {
-      id: sweet._id,
-      name: sweet.name,
-      category: sweet.category,
-      price: sweet.price,
-      quantity: sweet.quantity,
-      createdAt: sweet.createdAt,
-      updatedAt: sweet.updatedAt
-    };
-
     return {
-      sweet: sweetResponse,
+      sweet: {
+        _id: sweet._id,
+        id: sweet._id,
+        name: sweet.name,
+        category: sweet.category,
+        price: sweet.price,
+        quantity: sweet.quantity,
+        createdAt: sweet.createdAt,
+        updatedAt: sweet.updatedAt
+      },
       message: 'Sweet updated successfully'
     };
   }

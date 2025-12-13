@@ -1,6 +1,8 @@
 import request from 'supertest';
 import { app } from '../../app';
 import { User } from '../auth/user.model';
+import { Sweet } from '../sweets/sweet.model';
+import { Order } from '../orders/order.model';
 
 describe('Inventory API', () => {
   let userToken: string;
@@ -8,6 +10,10 @@ describe('Inventory API', () => {
   let sweetId: string;
 
   beforeEach(async () => {
+    // Clean up database
+    await User.deleteMany({});
+    await Sweet.deleteMany({});
+    await Order.deleteMany({});
     // Create a regular user and get token
     await request(app)
       .post('/api/auth/register')
@@ -35,18 +41,29 @@ describe('Inventory API', () => {
         password: 'password123'
       });
 
-    // Set admin role
-    await User.findOneAndUpdate(
+    // Set admin role and verify
+    const updatedUser = await User.findOneAndUpdate(
       { email: 'admin@example.com' },
-      { role: 'ADMIN' }
+      { role: 'ADMIN' },
+      { new: true }
     );
 
+    // Verify admin role was set
+    if (!updatedUser || updatedUser.role !== 'ADMIN') {
+      throw new Error('Failed to set admin role');
+    }
+
+    // Login to get fresh token with admin role
     const adminLoginResponse = await request(app)
       .post('/api/auth/login')
       .send({
         email: 'admin@example.com',
         password: 'password123'
       });
+
+    if (adminLoginResponse.status !== 200) {
+      throw new Error('Admin login failed');
+    }
 
     adminToken = adminLoginResponse.body.token;
 
@@ -59,9 +76,10 @@ describe('Inventory API', () => {
         category: 'Test',
         price: 10.99,
         quantity: 5
-      });
+      })
+      .expect(201);
 
-    sweetId = sweetResponse.body.sweet.id;
+    sweetId = sweetResponse.body.sweet._id;
   });
 
   describe('POST /api/sweets/:id/purchase', () => {

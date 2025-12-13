@@ -1,7 +1,17 @@
 import request from 'supertest';
 import { app } from '../../app';
+import { User } from './user.model';
+import { Sweet } from '../sweets/sweet.model';
+import { Order } from '../orders/order.model';
 
 describe('Auth API', () => {
+  beforeEach(async () => {
+    // Clean up database
+    await User.deleteMany({});
+    await Sweet.deleteMany({});
+    await Order.deleteMany({});
+  });
+
   describe('POST /api/auth/register', () => {
     it('should register a new user successfully', async () => {
       const userData = {

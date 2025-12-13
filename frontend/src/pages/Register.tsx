@@ -2,25 +2,35 @@ import React, { useState } from 'react';
 import { authAPI } from '../api/api';
 import { useAuth } from '../context/AuthContext';
 
-const Login: React.FC = () => {
+const Register: React.FC = () => {
   const [formData, setFormData] = useState({
+    name: '',
     email: '',
     password: ''
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState('');
   const { login } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setSuccess('');
     setLoading(true);
 
     try {
-      const response = await authAPI.login(formData);
-      login(response.data.user, response.data.token);
+      const registerResponse = await authAPI.register(formData);
+      setSuccess('Registration successful! Logging you in...');
+      
+      // Auto-login after successful registration
+      const loginResponse = await authAPI.login({
+        email: formData.email,
+        password: formData.password
+      });
+      login(loginResponse.data.user, loginResponse.data.token);
     } catch (err: any) {
-      setError(err.response?.data?.error || 'Login failed');
+      setError(err.response?.data?.error || 'Registration failed');
     } finally {
       setLoading(false);
     }
@@ -33,6 +43,21 @@ const Login: React.FC = () => {
           {error}
         </div>
       )}
+      {success && (
+        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+          {success}
+        </div>
+      )}
+      <div className="mb-4">
+        <input
+          type="text"
+          required
+          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+          placeholder="Full name"
+          value={formData.name}
+          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+        />
+      </div>
       <div className="mb-4">
         <input
           type="email"
@@ -48,7 +73,7 @@ const Login: React.FC = () => {
           type="password"
           required
           className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
-          placeholder="Password"
+          placeholder="Password (min 6 characters)"
           value={formData.password}
           onChange={(e) => setFormData({ ...formData, password: e.target.value })}
         />
@@ -56,12 +81,12 @@ const Login: React.FC = () => {
       <button
         type="submit"
         disabled={loading}
-        className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg disabled:opacity-50"
+        className="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg disabled:opacity-50"
       >
-        {loading ? 'Signing in...' : 'Sign in'}
+        {loading ? 'Creating account...' : 'Sign up'}
       </button>
     </form>
   );
 };
 
-export default Login;
+export default Register;

@@ -9,7 +9,10 @@
     "start": "node dist/server.js",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "create-admin": "ts-node src/scripts/create-admin.ts",
+    "fix-users": "ts-node src/scripts/fix-users.ts",
+    "update-sweets": "ts-node src/scripts/update-sweets.ts"
   },
   "keywords": [],
   "author": "",

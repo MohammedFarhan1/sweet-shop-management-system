@@ -9,7 +9,7 @@ export interface RestockData {
 }
 
 export class InventoryService {
-  async purchaseSweet(sweetId: string, purchaseData: PurchaseData): Promise<{ sweet: Partial<ISweet>; message: string }> {
+  async purchaseSweet(sweetId: string, purchaseData: PurchaseData): Promise<{ sweet: any; message: string }> {
     const { quantity } = purchaseData;
 
     // Validate input
@@ -38,24 +38,22 @@ export class InventoryService {
     sweet.updatedAt = new Date();
     await sweet.save();
 
-    // Return updated sweet
-    const sweetResponse = {
-      id: sweet._id,
-      name: sweet.name,
-      category: sweet.category,
-      price: sweet.price,
-      quantity: sweet.quantity,
-      createdAt: sweet.createdAt,
-      updatedAt: sweet.updatedAt
-    };
-
     return {
-      sweet: sweetResponse,
+      sweet: {
+        _id: sweet._id,
+        id: sweet._id,
+        name: sweet.name,
+        category: sweet.category,
+        price: sweet.price,
+        quantity: sweet.quantity,
+        createdAt: sweet.createdAt,
+        updatedAt: sweet.updatedAt
+      },
       message: 'Purchase successful'
     };
   }
 
-  async restockSweet(sweetId: string, restockData: RestockData): Promise<{ sweet: Partial<ISweet>; message: string }> {
+  async restockSweet(sweetId: string, restockData: RestockData): Promise<{ sweet: any; message: string }> {
     const { quantity } = restockData;
 
     // Validate input
@@ -74,19 +72,17 @@ export class InventoryService {
     sweet.updatedAt = new Date();
     await sweet.save();
 
-    // Return updated sweet
-    const sweetResponse = {
-      id: sweet._id,
-      name: sweet.name,
-      category: sweet.category,
-      price: sweet.price,
-      quantity: sweet.quantity,
-      createdAt: sweet.createdAt,
-      updatedAt: sweet.updatedAt
-    };
-
     return {
-      sweet: sweetResponse,
+      sweet: {
+        _id: sweet._id,
+        id: sweet._id,
+        name: sweet.name,
+        category: sweet.category,
+        price: sweet.price,
+        quantity: sweet.quantity,
+        createdAt: sweet.createdAt,
+        updatedAt: sweet.updatedAt
+      },
       message: 'Restock successful'
     };
   }

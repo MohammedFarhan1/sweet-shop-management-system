@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { sweetsAPI, Sweet } from '../api/api';
+import { sweetsAPI, cartAPI, Sweet } from '../api/api';
 
 const Dashboard: React.FC = () => {
   const [sweets, setSweets] = useState<Sweet[]>([]);
@@ -9,10 +9,21 @@ const Dashboard: React.FC = () => {
   const [category, setCategory] = useState('');
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
+  const [cartCount, setCartCount] = useState(0);
 
   useEffect(() => {
     fetchSweets();
+    fetchCartCount();
   }, []);
+
+  const fetchCartCount = async () => {
+    try {
+      const response = await cartAPI.getCart();
+      setCartCount(response.data.items.length);
+    } catch (err) {
+      // Cart might be empty or user not logged in
+    }
+  };
 
   const fetchSweets = async () => {
     try {
@@ -54,11 +65,33 @@ const Dashboard: React.FC = () => {
     }
   };
 
+  const addToCart = async (sweetId: string, quantity: number) => {
+    try {
+      await cartAPI.addToCart(sweetId, quantity);
+      fetchCartCount();
+      alert('Added to cart!');
+    } catch (err: any) {
+      alert(err.response?.data?.error || 'Failed to add to cart');
+    }
+  };
+
   const categories = [...new Set(sweets.map(sweet => sweet.category))];
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6">Sweet Shop Dashboard</h1>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold">Sweet Shop Dashboard</h1>
+        <div className="relative">
+          <button className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center">
+            🛒 Cart
+            {cartCount > 0 && (
+              <span className="ml-2 bg-red-500 text-white rounded-full px-2 py-1 text-xs">
+                {cartCount}
+              </span>
+            )}
+          </button>
+        </div>
+      </div>
 
       {/* Search Section */}
       <div className="bg-white p-4 rounded-lg shadow-md mb-6">
@@ -138,29 +171,45 @@ const Dashboard: React.FC = () => {
               </p>
               
               {sweet.quantity > 0 && (
-                <div className="flex items-center space-x-2">
+                <div className="space-y-2">
                   <input
                     type="number"
                     min="1"
                     max={sweet.quantity}
                     defaultValue="1"
-                    className="w-20 px-2 py-1 border rounded"
+                    className="w-full px-2 py-1 border rounded"
                     id={`quantity-${sweet.id}`}
                   />
-                  <button
-                    onClick={() => {
-                      const input = document.getElementById(`quantity-${sweet.id}`) as HTMLInputElement;
-                      const quantity = parseInt(input.value);
-                      if (quantity > 0 && quantity <= sweet.quantity) {
-                        handlePurchase(sweet.id, quantity);
-                      } else {
-                        alert('Invalid quantity');
-                      }
-                    }}
-                    className="bg-green-500 hover:bg-green-700 text-white px-4 py-1 rounded"
-                  >
-                    Purchase
-                  </button>
+                  <div className="flex space-x-2">
+                    <button
+                      onClick={() => {
+                        const input = document.getElementById(`quantity-${sweet.id}`) as HTMLInputElement;
+                        const quantity = parseInt(input.value);
+                        if (quantity > 0 && quantity <= sweet.quantity) {
+                          addToCart(sweet.id, quantity);
+                        } else {
+                          alert('Invalid quantity');
+                        }
+                      }}
+                      className="flex-1 bg-blue-500 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm"
+                    >
+                      🛒 Add to Cart
+                    </button>
+                    <button
+                      onClick={() => {
+                        const input = document.getElementById(`quantity-${sweet.id}`) as HTMLInputElement;
+                        const quantity = parseInt(input.value);
+                        if (quantity > 0 && quantity <= sweet.quantity) {
+                          handlePurchase(sweet.id, quantity);
+                        } else {
+                          alert('Invalid quantity');
+                        }
+                      }}
+                      className="flex-1 bg-green-500 hover:bg-green-700 text-white px-3 py-1 rounded text-sm"
+                    >
+                      💳 Buy Now
+                    </button>
+                  </div>
                 </div>
               )}
             </div>

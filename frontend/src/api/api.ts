@@ -50,6 +50,19 @@ export interface SweetsResponse {
   sweets: Sweet[];
 }
 
+export interface CartItem {
+  id: string;
+  sweet: Sweet;
+  quantity: number;
+  totalPrice: number;
+}
+
+export interface CartResponse {
+  items: CartItem[];
+  totalItems: number;
+  totalPrice: number;
+}
+
 // Auth API
 export const authAPI = {
   register: (data: { name: string; email: string; password: string }) =>
@@ -79,6 +92,22 @@ export const sweetsAPI = {
   
   restock: (id: string, quantity: number) =>
     api.post<SweetResponse>(`/sweets/${id}/restock`, { quantity }),
+};
+
+// Cart API
+export const cartAPI = {
+  getCart: () => api.get<CartResponse>('/cart'),
+  
+  addToCart: (sweetId: string, quantity: number) =>
+    api.post('/cart/add', { sweetId, quantity }),
+  
+  updateCart: (sweetId: string, quantity: number) =>
+    api.put('/cart/update', { sweetId, quantity }),
+  
+  removeFromCart: (sweetId: string) =>
+    api.delete(`/cart/remove/${sweetId}`),
+  
+  clearCart: () => api.delete('/cart/clear'),
 };
 
 export default api;
