@@ -1,0 +1,143 @@
+# Sweet Shop Management System - Requirements File
+# Full-stack application with Node.js/TypeScript backend and React frontend
+
+# ================================
+# BACKEND DEPENDENCIES (Node.js)
+# ================================
+
+# Core Runtime Dependencies
+bcrypt@^6.0.0                    # Password hashing
+cors@^2.8.5                      # Cross-origin resource sharing
+dotenv@^17.2.3                   # Environment variables
+express@^5.2.1                   # Web framework
+jsonwebtoken@^9.0.3              # JWT authentication
+mongoose@^9.0.1                  # MongoDB ODM
+
+# Development Dependencies
+@types/bcrypt@^6.0.0             # TypeScript types for bcrypt
+@types/cors@^2.8.19              # TypeScript types for cors
+@types/express@^5.0.6            # TypeScript types for express
+@types/jest@^30.0.0              # TypeScript types for jest
+@types/jsonwebtoken@^9.0.10      # TypeScript types for jsonwebtoken
+@types/node@^25.0.1              # TypeScript types for Node.js
+@types/supertest@^6.0.3          # TypeScript types for supertest
+jest@^30.2.0                     # Testing framework
+nodemon@^3.1.11                  # Development server auto-restart
+supertest@^7.1.4                 # HTTP testing
+ts-jest@^29.4.6                  # Jest TypeScript preprocessor
+ts-node@^10.9.2                  # TypeScript execution for Node.js
+typescript@^5.9.3                # TypeScript compiler
+
+# ================================
+# FRONTEND DEPENDENCIES (React)
+# ================================
+
+# Core Runtime Dependencies
+@tailwindcss/postcss@^4.1.18     # Tailwind CSS PostCSS plugin
+@types/react-router-dom@^5.3.3   # TypeScript types for React Router
+axios@^1.13.2                    # HTTP client
+react@^19.2.0                    # React library
+react-dom@^19.2.0                # React DOM renderer
+react-router-dom@^7.10.1         # React routing
+
+# Development Dependencies
+@eslint/js@^9.39.1               # ESLint JavaScript rules
+@types/node@^24.10.1             # TypeScript types for Node.js (frontend)
+@types/react@^19.2.5             # TypeScript types for React
+@types/react-dom@^19.2.3         # TypeScript types for React DOM
+@vitejs/plugin-react@^5.1.1      # Vite React plugin
+autoprefixer@^10.4.22            # CSS autoprefixer
+eslint@^9.39.1                   # JavaScript linter
+eslint-plugin-react-hooks@^7.0.1 # ESLint React hooks rules
+eslint-plugin-react-refresh@^0.4.24 # ESLint React refresh rules
+globals@^16.5.0                  # Global variables for ESLint
+postcss@^8.5.6                   # CSS processor
+tailwindcss@^4.1.18              # Utility-first CSS framework
+typescript@~5.9.3                # TypeScript compiler (frontend)
+typescript-eslint@^8.46.4        # TypeScript ESLint integration
+rolldown-vite@7.2.5              # Vite bundler (custom version)
+
+# ================================
+# SYSTEM REQUIREMENTS
+# ================================
+
+# Runtime Environment
+Node.js >= 16.0.0
+npm >= 8.0.0
+
+# Database
+MongoDB Atlas (Cloud) or MongoDB >= 5.0
+
+# Development Tools
+Git >= 2.0.0
+VS Code (recommended IDE)
+
+# ================================
+# ENVIRONMENT VARIABLES
+# ================================
+
+# Backend (.env file required)
+MONGODB_URI=mongodb+srv://sweetshop_admin:admin123@sweet-shop-cluster.thrjcvk.mongodb.net/sweetshop?retryWrites=true&w=majority
+JWT_SECRET=your-secret-key-here
+PORT=5000
+
+# Frontend (optional .env file)
+VITE_API_URL=http://localhost:5000
+
+# ================================
+# INSTALLATION COMMANDS
+# ================================
+
+# Backend Setup:
+# cd backend
+# npm install
+
+# Frontend Setup:
+# cd frontend  
+# npm install
+
+# ================================
+# BUILD & RUN COMMANDS
+# ================================
+
+# Backend Development:
+# npm run dev          # Start development server
+# npm test             # Run tests
+# npm run build        # Build for production
+# npm start            # Start production server
+
+# Frontend Development:
+# npm run dev          # Start development server
+# npm run build        # Build for production
+# npm run preview      # Preview production build
+
+# ================================
+# PROJECT FEATURES
+# ================================
+
+# Authentication & Authorization
+# - JWT-based authentication
+# - Role-based access (USER/ADMIN)
+# - Password hashing with bcrypt
+
+# Sweet Management
+# - CRUD operations for sweets
+# - Search and filtering
+# - Category management
+
+# Inventory Management
+# - Purchase functionality
+# - Stock management
+# - Restock operations (admin only)
+
+# Testing
+# - 30+ comprehensive tests
+# - TDD methodology
+# - Unit and integration tests
+# - Test coverage reporting
+
+# Frontend Features
+# - Responsive design with Tailwind CSS
+# - React with TypeScript
+# - Context API for state management
+# - Axios for API communication
