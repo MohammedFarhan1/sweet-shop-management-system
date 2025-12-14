@@ -1,3 +1,14 @@
+## 👋 Hi, I'm Mohammed Farhan
+
+I’m a **Full Stack Developer** with hands-on experience in building scalable web applications using modern frontend and backend technologies. I enjoy designing clean architectures, developing RESTful APIs, and creating user-friendly interfaces.
+
+This my work, projects, and experiments focused on full-stack development, problem-solving, and real-world application design.
+
+📧 Email: mohammed.farhan.dev@gmail.com  
+📞 Phone: +91 94983 58776  
+💻 GitHub: https://github.com/MohammedFarhan1  
+🌐 Portfolio: https://mohammedfarhan1.github.io/My-Portfolio-Website
+
 # Sweet Shop Management System
 
 A full-stack web application for managing a sweet shop's inventory, built using **Test-Driven Development (TDD)** principles with Node.js, TypeScript, Express.js, MongoDB, and React.
